@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -46,5 +47,24 @@ export class PostsService {
     }
 
     return this.postsRepository.remove(post);
+  }
+
+  async update(postId: number, dto: UpdatePostDto, userId: number) {
+    const post = await this.postsRepository.findOne({
+      where: { id: postId },
+      relations: ['user'],
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+
+    if (post.user.id !== userId) {
+      throw new ForbiddenException('You are not allowed to update this post');
+    }
+
+    Object.assign(post, dto);
+
+    return this.postsRepository.save(post);
   }
 }

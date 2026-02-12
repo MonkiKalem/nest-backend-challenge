@@ -7,11 +7,15 @@ import {
   Delete,
   UseGuards,
   Req,
+  Patch,
+  Request,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import type { RequestWithUser } from '../auth/types/request-with-user.interface';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('posts')
@@ -29,7 +33,16 @@ export class PostsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: RequestWithUser) {
-    return this.postsService.remove(Number(id), req.user.userId);
+  remove(@Param('id') id: string, @GetUser('userId') userId: number) {
+    return this.postsService.remove(Number(id), userId);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdatePostDto,
+    @GetUser('userId') userId: number,
+  ) {
+    return this.postsService.update(Number(id), dto, userId);
   }
 }
