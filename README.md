@@ -63,6 +63,9 @@ JWT Payload:
   "sub": userId,
   "email": "user@email.com"
 }
+```
+
+---
 
 4️⃣ Owner-based Authorization
 
