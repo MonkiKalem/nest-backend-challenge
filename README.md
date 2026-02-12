@@ -106,13 +106,13 @@ src/
 ⚙️ Environment Variables
 
 Create .env file:
-
+```
 DB_HOST=
 DB_PORT=
 DB_USER=
 DB_PASS=
 DB_NAME=
-
+```
 
 JWT_SECRET=your_secret
 JWT_EXPIRES_IN=1d
