@@ -5,7 +5,7 @@ import { UsersModule } from '../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './jwt.strategy/jwt.strategy';
+import { JwtStrategy } from './jwt/jwt.strategy';
 import { JwtModuleOptions } from '@nestjs/jwt';
 import type { StringValue } from 'ms';
 
